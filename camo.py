@@ -27,9 +27,16 @@ class CamoClient(object):
                 img.set('src', self._rewrite_url(img.get('src')))
         return node
 
+    def _rewrite_style_urls(self, node):
+        for link in node.xpath('.//link[@rel="stylesheet"]'):
+            if link.get('src'):
+                link.set('src', self._rewrite_url(link.get('src')))
+        return node
+
     def parse_html(self, string):
         doc = html.fromstring(string.join(['<div>', '</div>']))
         doc = self._rewrite_image_urls(doc)
+        doc = self._rewrite_style_urls(doc)
         # iterating over a node returns all the tags within that node
         # ..if there are none, return the original string
         return ''.join(map(html.tostring, doc)) or string
