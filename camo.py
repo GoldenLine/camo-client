@@ -29,8 +29,8 @@ class CamoClient(object):
 
     def _rewrite_style_urls(self, node):
         for link in node.xpath('.//link[@rel="stylesheet"]'):
-            if link.get('src'):
-                link.set('src', self._rewrite_url(link.get('src')))
+            if link.get('href'):
+                link.set('href', self._rewrite_url(link.get('href')))
         return node
 
     def parse_html(self, string):
