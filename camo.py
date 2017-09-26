@@ -1,3 +1,4 @@
+import codecs
 import hashlib
 import hmac
 import re
@@ -39,12 +40,12 @@ class CamoClient(object):
         doc = self._rewrite_style_urls(doc)
         # iterating over a node returns all the tags within that node
         # ..if there are none, return the original string
-        return ''.join(map(html.tostring, doc)) or string
+        return ''.join(html.tostring(node, encoding='unicode') for node in doc) or string
 
 
 class Image(object):
     def __init__(self, url, key):
-        self.url = url
+        self.url = url.encode('utf-8')
         self.key = key
 
     @mproperty
@@ -57,4 +58,4 @@ class Image(object):
 
     @mproperty
     def encoded_url(self):
-        return self.url.encode("hex")
+        return codecs.encode(self.url, "hex").decode('utf-8')
