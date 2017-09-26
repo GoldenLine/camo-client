@@ -32,8 +32,8 @@ class CamoClientTest(unittest.TestCase):
 
     def test_parses_html_for_css_links(self):
         client = CamoClient("https://fakecdn.org/", key="hello")
-        html = """<link rel="stylesheet" src="http://www.csszengarden.com/214/214.css" />"""
-        parsed = """<link rel="stylesheet" src="https://fakecdn.org/0d5370557ac9428fdd6964cf0351b68690a88721/687474703a2f2f7777772e6373737a656e67617264656e2e636f6d2f3231342f3231342e637373">"""
+        html = """<link rel="stylesheet" href="http://www.csszengarden.com/214/214.css" />"""
+        parsed = """<link rel="stylesheet" href="https://fakecdn.org/0d5370557ac9428fdd6964cf0351b68690a88721/687474703a2f2f7777772e6373737a656e67617264656e2e636f6d2f3231342f3231342e637373">"""
         self.assertEqual(client.parse_html(html), parsed)
 
     def test_ignores_already_hosted(self):
